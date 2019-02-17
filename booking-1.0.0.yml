@@ -1,0 +1,148 @@
+openapi: "3.0.1"
+info:
+  description: "This is a booking server."
+  version: "1.0.0"
+  title: "Booking API"
+  contact:
+    email: "jan@janmg.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+- name: "booking"
+  description: "Everything about your bookings"
+  externalDocs:
+    description: "Find out more"
+    url: "http://janmg.com/booking.html"
+paths:
+  /booking:
+
+    get:
+      tags:
+      - "booking"
+      summary: "List bookings"
+      operationId: "listbooking"
+      parameters:
+      - $ref: '#/components/parameters/email'
+      - $ref: '#/components/parameters/limit'      
+      - $ref: '#/components/parameters/page'
+      responses:
+        200:
+          description: "success"
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/booking'
+        403:
+          description: "unauthorized"
+        404:
+          description: "booking not found"
+        405:
+          description: "validation exception"
+      security:
+      - bookingstore_auth:
+        - "write:bookings"
+        - "read:bookings"
+
+    post:
+      tags:
+      - "booking"
+      summary: "Create a new booking"
+      description: ""
+      operationId: "addbooking"
+      parameters:
+      - $ref: '#/components/parameters/email'
+      - $ref: '#/components/parameters/venue'
+      - $ref: '#/components/parameters/people'
+      - $ref: '#/components/parameters/eventdate'
+      - $ref: '#/components/parameters/duration'
+      responses:
+        200:
+          description: "created a new event"
+        405:
+          description: "invalid input"
+      security:
+      - bookingstore_auth:
+        - "write:bookings"
+        - "read:bookings"
+
+components:
+  parameters:
+    email:
+      name: email
+      in: query
+      description: "Email address used as ID"
+      required: true
+      schema:
+        type: string
+    venue:
+      name: venue
+      in: query
+      description: "Venue name"
+      required: true
+      schema:
+        type: string
+    countrycode:
+      name: countrycode
+      in: query
+      description: "Country code as ISO 3166-1 alpha-2, also accepting IANA ccTLD country-codes (e.g. United Kingdom in is in ISO 3166-1: GB and in IANA ccTLD: UK"
+      required: true
+      schema:
+        type: string
+    people:
+      name: people
+      in: query
+      description: "Optional guestlist"
+      required: false
+      schema:
+        type: string
+    eventdate:
+      name: eventdate
+      in: query
+      description: "The date and time of the event, as RFC3339 (e.g. 1996-12-19T16:39:57+03:00)"
+      required: true
+      schema:
+        type: string
+        format: date-time
+    duration:
+      name: duration
+      in: query
+      description: "The duration in minutes of the event"
+      required: true
+      schema:
+        type: integer
+    # pagination
+    limit:
+      name: limit
+      in: query
+      description: "Optional pagination limit, maximum 100 per page"
+      schema:
+        type: integer
+    page:
+      name: page
+      in: query
+      description: "Optional pagination page, defaults to page 1"
+      schema:
+        type: integer
+
+  # Booking object
+  schemas:
+    booking:
+      type: object
+      properties:
+        email:
+          type: string
+        createddate:
+          type: string
+        eventdate:
+          type: string
+        duration:
+          type: integer
+        venue:
+          type: string
+        countrycode:
+          type: string
+        people:
+          type: string
+        totalprice:
+          type: integer
