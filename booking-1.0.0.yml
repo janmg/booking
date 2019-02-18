@@ -116,12 +116,14 @@ components:
       name: limit
       in: query
       description: "Optional pagination limit, maximum 100 per page"
+      required: false
       schema:
         type: integer
     page:
       name: page
       in: query
       description: "Optional pagination page, defaults to page 1"
+      required: false
       schema:
         type: integer
 

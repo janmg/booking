@@ -25,14 +25,14 @@ exports.addbooking = function(email,venue,eventdate,duration,people) {
 }
 
 exports.listbooking = function(email,limit,page) {
-  console.log("viewing bookings for "+email);
+  var limit = (limit === undefined || limit > 100) ? 100 : limit;
+  var page = (page === undefined || page < 1) ? 1 : page;
   return new Promise(function(resolve, reject) {
-      if (limit > 100) limit = 100;
-      if (page < 1) page = 1;
       pool.getConnection()
          .then(conn => {
             conn.query('SELECT * FROM booking WHERE email=? LIMIT ?,?', [email, limit*(page-1), limit])
                .then(rows => {
+                   console.log("listed bookings:"+email+" page: "+page+" limit: "+limit);
                    conn.end();
                    resolve(JSON.stringify({ booking: rows }));
 	    })
