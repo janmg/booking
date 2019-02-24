@@ -7,11 +7,16 @@ The starting point is a Swagger OpenAPI 3.0.1 YAML definition and Swagger Codege
 
 The API is frontended by NGINX with URL's /docs /api-docs and /booking. The predefined bookings for listing are jan@janmg.com and test@janmg.com. Own bookings can be created through the Swagger UI.
 
-The HTML interface is very crude, it's contains an empty table that's filled through javascript from the API with an email address as input. pagination is done through the page variable, the items per page is limited to 10, there are no boundary checks so pages can be negative and higher where no entries are available. The HTML intereface shows how javascript internally works by elements, but it's hardly  a sustainable framework, personally I would pick ng2-table for Angular.io, but I lack the experience to do this quickly. JSF or Vaadin would be a JAVA equivalent, those produce javascript towards browsers.
+The HTML interface is very crude, it's contains an empty table that's filled through javascript from the API with an email address as input. pagination is done through the page variable, the items per page is limited to 10, there are no boundary checks so pages can be negative and higher where no entries are available. The HTML intereface shows how javascript internally works by elements, but it's hardly  a sustainable framework.
+
+I used PrimeNG for Angular because it's similar to PrimeFaces for JAVA JSF. The MVC principles are the same. The Angular table fetches the data from the API, but create/update/delete hooks are not implemented.
 
 ## Service
 [Booking API](https://api.janmg.com/docs/#/booking)
-[Booking WWW](https://www.janmg.com/booking.html)
+
+[Booking HTML](https://www.janmg.com/booking.html)
+
+[Booking Angular](https://api.janmg.com/)
 
 ## Installation 
 ```bash
