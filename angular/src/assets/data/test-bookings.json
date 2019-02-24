@@ -1,0 +1,6 @@
+{
+    "booking": [
+        { "email": "jan@janmg.com","created": "2018-01-01 10:20:05.123","eventdate": "2019-02-18 08:00:00.000","duration": 60,"venue": "suomenlinna","country": "fi","people": "mommy, daddy and little kids","price": 67 },
+        { "email": "jan@janmg.com","created": "2018-01-01 10:20:05.123","eventdate": "2019-02-19 08:00:00.000","duration": 60,"venue": "suomenlinna","country": "fi","people": "mommy, daddy and little kids","price": 67 }
+    ]
+}

@@ -1,0 +1,53 @@
+<div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+            <input type="text" pInputText placeholder="email address" [(ngModel)]="email"> <p-button (click)="list()" label="Find&nbsp;Bookings" ></p-button>
+        </div>
+    </div>
+</div>
+
+<p-table [columns]="cols" [value]="bookings" selectionMode="single" [(selection)]="selectedBooking" (onRowSelect)="onRowSelect($event)" [paginator]="true" visible="hidden" rows="10">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr [pSelectableRow]="rowData">
+            <td *ngFor="let col of columns">
+                {{rowData[col.field]}}
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" label="Create Booking"></button>
+        </div>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Booking Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [closable]="true" [width]="380">
+    <div class="ui-g ui-fluid" *ngIf="booking">
+        <div class="ui-g-12">
+            <p-calendar [(ngModel)]="booking.eventdate" [inline]="true" showTime="true" hourFormat="24"></p-calendar>
+        </div>
+        <div class="ui-g-4"><label for="duration">duration</label></div>
+        <div class="ui-g-8"><input pInputText id="duration" [(ngModel)]="booking.duration" /></div>
+        <div class="ui-g-4"><label for="venue">venue</label></div>
+        <div class="ui-g-8"><input pInputText id="venue" [(ngModel)]="booking.venue" /></div>
+        <div class="ui-g-4"><label for="country">country</label></div>
+        <div class="ui-g-8"><input pInputText id="country" [(ngModel)]="booking.country" /></div>
+        <div class="ui-g-4"><label for="people">people</label></div>
+        <div class="ui-g-8"><input pInputText id="people" [(ngModel)]="booking.people" /></div>
+    </div>
+    <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">
+            <button type="button" pButton icon="pi pi-times" (click)="delete()" label="Delete"></button>
+            <button type="button" pButton icon="pi pi-check" (click)="save()" label="Save"></button>
+        </div>
+    </p-footer>
+</p-dialog>
